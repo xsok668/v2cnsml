@@ -1,5 +1,4 @@
 #!/bin/sh
-
 option() {
 	echo -n $echo_opt_e "1. 安装项目\n2. 卸载项目\n请输入选项(默认为1): "
 	read install_opt
@@ -14,7 +13,6 @@ option() {
 	echo -n '后台运行吗?(输出保存在builds.out文件)[n]: '
 	read daemon_run
 }
-
 tinyproxy_set() {
 	echo -n '请输入tinyproxy端口: '
 	read tinyproxy_port
@@ -28,7 +26,6 @@ tinyproxy_set() {
 	[ -z "$tinyproxy_install_dir" ] && tinyproxy_install_dir='/usr/local/tinyproxy'
 	export tinyproxy_port tinyproxy_proxy_key tinyproxy_install_dir tinyproxy_UPX
 }
-
 cns_set() {
 	echo -n '请输入cns服务端口(如果不用请留空): '
 	read cns_port
@@ -48,7 +45,6 @@ cns_set() {
 	[ -z "$cns_install_dir" ] && cns_install_dir='/usr/local/cns'
 	export cns_port cns_encrypt_password cns_udp_flag cns_proxy_key cns_tls_port cns_install_dir cns_UPX
 }
-
 xray_set() {
 		echo -n "请输入xray安装目录(默认: /usr/local/xray): "
 		read xray_install_directory
@@ -123,7 +119,6 @@ xray_set() {
 		[ -z "$xray_install_directory" ] && xray_install_directory='/usr/local/xray'
 		export xray_install_directory xray_inbounds_options vmess_tcp_http_port vmess_tcp_tls_port vless_tcp_reality_port vmess_ws_port vmess_ws_path vmess_ws_tls_port vmess_ws_tls_path vless_ws_tls_port vless_ws_tls_path vmess_mkcp_port vmess_mkcp_tls_port vless_mkcp_tls_port trojan_tls_port xray_UPX
 }
-
 amy4Server_set() {
 	echo -n "请输入内部账号（如果没有请忽略）: "
 	read amy4Server_auth_secret
@@ -140,14 +135,11 @@ amy4Server_set() {
 	[ -z "$amy4Server_install_dir" ] && amy4Server_install_dir=/usr/local/amy4Server
 	echo -n "安装UPX压缩版本?[n]: "
 	read amy4Server_UPX
-	#echo -n "是否使用HTTP代理拉取amy4Server配置(1.百度 2.联通UC):"
-	#read amy4Server_proxy_opt
 	echo "$amy4Server_install_dir"|grep -q '^/' || amy4Server_install_dir="$PWD/$amy4Server_install_dir"
 	export amy4Server_auth_secret amy4Server_secret_password amy4Server_port amy4Server_clientkey ipv6_support amy4Server_install_dir amy4Server_UPX
 }
-
 tinyproxy_task() {
-	if $download_tool_cmd tinyproxy.sh https://raw.githubusercontent.com/Joker-xps/v2cnsml/main/tinyproxy/tinyproxy.sh; then
+	if $download_tool_cmd tinyproxy.sh https://raw.githubusercontent.com/xsok668/v2cnsml/main/tinyproxy/tinyproxy.sh; then
 		chmod 777 tinyproxy.sh
 		sed -i "s~#\!/bin/bash~#\!$SHELL~" tinyproxy.sh
 		./tinyproxy.sh $task_type && \
@@ -158,9 +150,8 @@ tinyproxy_task() {
 	fi
 	rm -f tinyproxy.sh
 }
-
 cns_task() {
-	if $download_tool_cmd cns.sh https://raw.githubusercontent.com/Joker-xps/v2cnsml/main/cns/cns.sh; then
+	if $download_tool_cmd cns.sh https://raw.githubusercontent.com/xsok668/v2cnsml/main/cns/cns.sh; then
 		chmod 777 cns.sh
 		sed -i "s~#\!/bin/bash~#\!$SHELL~" cns.sh
 		echo $echo_opt_e "n\ny\ny\ny\ny\n"|./cns.sh $task_type && \
@@ -171,9 +162,8 @@ cns_task() {
 	fi
 	rm -f cns.sh
 }
-
 xray_task() {
-	if $download_tool_cmd xray.sh https://raw.githubusercontent.com/Joker-xps/v2cnsml/main/xray/xray.sh; then
+	if $download_tool_cmd xray.sh https://raw.githubusercontent.com/xsok668/v2cnsml/main/xray/xray.sh; then
 		chmod 777 xray.sh
 		sed -i "s~#\!/bin/bash~#\!$SHELL~" xray.sh
 		echo $echo_opt_e "n\ny\ny\ny\ny\n"|./xray.sh $task_type && \
@@ -184,9 +174,8 @@ xray_task() {
 	fi
 	rm -f xray.sh
 }
-
 amy4Server_task() {
-	if $download_tool_cmd amy4Server.sh https://raw.githubusercontent.com/Joker-xps/v2cnsml/main/amy4Server/amy4Server.sh; then
+	if $download_tool_cmd amy4Server.sh https://raw.githubusercontent.com/xsok668/v2cnsml/main/amy4Server/amy4Server.sh; then
 		chmod 777 amy4Server.sh
 		sed -i "s~#\!/bin/bash~#\!$SHELL~" amy4Server.sh
 		echo $echo_opt_e "n"|./amy4Server.sh $task_type && \
@@ -197,35 +186,30 @@ amy4Server_task() {
 	fi
 	rm -f amy4Server.sh
 }
-
 tinyproxy_uninstall_set() {
 	echo -n '请输入tinyproxy安装目录(默认/usr/local/tinyproxy): '
 	read tinyproxy_install_dir
 	[ -z "$tinyproxy_install_dir" ] && tinyproxy_install_dir='/usr/local/tinyproxy'
 	export tinyproxy_install_dir
 }
-
 cns_uninstall_set() {
 	echo -n '请输入cns安装目录(默认/usr/local/cns): '
 	read cns_install_dir
 	[ -z "$cns_install_dir" ] && cns_install_dir='/usr/local/cns'
 	export cns_install_dir
 }
-
 xray_uninstall_set() {
 	echo -n "请输入xray安装目录(默认/usr/local/xray): "
 	read xray_install_directory
 	[ -z "$xray_install_directory" ] && xray_install_directory='/usr/local/xray'
 	export xray_install_directory
 }
-
 amy4Server_uninstall_set() {
 	echo -n "请输入amy4Server安装目录(默认/usr/local/amy4Server): "
 	read amy4Server_install_dir
 	[ -z "$amy4Server_install_dir" ] && amy4Server_install_dir='/usr/local/amy4Server'
 	export amy4Server_install_dir
 }
-
 server_install_set() {
 	for opt in $*; do
 		case $opt in
@@ -237,7 +221,6 @@ server_install_set() {
 		esac
 	done
 }
-
 server_uninstall_set() {
 	for opt in $*; do
 		case $opt in
@@ -249,7 +232,6 @@ server_uninstall_set() {
 		esac
 	done
 }
-
 start_task() {
 	for opt in $*; do
 		case $opt in
@@ -263,7 +245,6 @@ start_task() {
 	echo '所有任务完成' >>builds.log
 	echo $echo_opt_e "\033[32m`cat builds.log 2>&-`\033[0m"
 }
-
 run_tasks() {
 	[ "$task_type" != 'uninstall' ] && server_install_set $build_projects || server_uninstall_set $build_projects
 	if echo "$daemon_run"|grep -qi 'y'; then
@@ -274,7 +255,6 @@ run_tasks() {
 		rm -f builds.log
 	fi
 }
-
 script_init() {
 	emulate bash 2>/dev/null #zsh仿真模式
 	echo -e '' | grep -q 'e' && echo_opt_e='' || echo_opt_e='-e' #dash的echo没有-e选项
@@ -284,11 +264,9 @@ script_init() {
 	rm -f builds.log builds.out
 	clear
 }
-
 main() {
 	script_init
 	option
 	run_tasks
 }
-
 main
